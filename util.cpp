@@ -4,6 +4,8 @@
 #include <algorithm>
 #include "util.h"
 
+#include <set>
+
 using namespace std;
 std::string convToLower(std::string src)
 {
@@ -16,15 +18,30 @@ std::string convToLower(std::string src)
 std::set<std::string> parseStringToWords(string rawWords)
 {
 
+    std::set<std::string> keywords;
+    std::string word;
+    std::stringstream ss;
 
+    for(char ch : rawWords) {
+        if(isalnum(ch)) {
+            ss << static_cast<char>(tolower(ch));
+        }
+        
+        else {
+            if(ss.str().length() >= 2) {
+                keywords.insert(ss.str());
+            }
 
+            ss.str("");
+            ss.clear();
+        }
+    }
 
+    if(ss.str().length() >= 2) {
+        keywords.insert(ss.str());
+    }
 
-
-
-
-
-
+    return keywords;
 }
 
 /**************************************************
